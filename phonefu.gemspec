@@ -6,11 +6,11 @@ require 'phonefu/version'
 Gem::Specification.new do |spec|
   spec.name          = "phonefu"
   spec.version       = Phonefu::VERSION
-  spec.authors       = ["conanite"]
+  spec.authors       = ["Conan Dalton"]
   spec.email         = ["conan@conandalton.net"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
-  spec.homepage      = ""
+  spec.summary       = %q{Parse and format phone numbers, detect mobile numbers where possible}
+  spec.description   = %q{Detect mobile numbers}
+  spec.homepage      = "https://github.com/conanite/phonefu"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
