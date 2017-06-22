@@ -37,7 +37,7 @@ module Phonefu
     end
 
     def format with_cc=false
-      country.format number, with_cc
+      country ? country.format(number, with_cc) : number
     end
 
     def to_sms

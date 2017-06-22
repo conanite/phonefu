@@ -65,5 +65,13 @@ describe Phonefu do
       expect(tn.format "FR").to eq "06 60 62 31 84"
       expect(tn.format "DE").to eq "+33 6 60 62 31 84"
     end
+
+    it "just returns the number if the country is unknown" do
+      tn = Phonefu.parse "not a number"
+      expect(tn.format "FR" ).to eq "not a number"
+      expect(tn.format "DE" ).to eq "not a number"
+      expect(tn.format true ).to eq "not a number"
+      expect(tn.format false).to eq "not a number"
+    end
   end
 end
