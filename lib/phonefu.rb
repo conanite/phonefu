@@ -41,11 +41,11 @@ module Phonefu
     end
 
     def to_sms
-      "#{country_code}#{number}"
+      "#{country_code}#{number}" if mobile?
     end
 
     def to_s
-      "+#{country_code}#{number}"
+      country_code ? "+#{country_code}#{number}" : number
     end
   end
 
@@ -61,7 +61,7 @@ module Phonefu
       attr_accessor :iso2, :dial_code, :mobile_regex, :belongs, :formatters
       def initialize iso2, dial_code, mobile_regex, formatters=nil
         @iso2, @dial_code, @mobile_regex = iso2, dial_code, mobile_regex.freeze
-        @formatters = formatters
+        @formatters = formatters || { }
         @belongs = /^#{dial_code}/.freeze
       end
 
@@ -70,7 +70,7 @@ module Phonefu
       end
 
       def mobile? num
-        num.match @mobile_regex
+        @mobile_regex && num.match(@mobile_regex)
       end
 
       def format num, with_cc
@@ -80,7 +80,7 @@ module Phonefu
             return with_cc ? "+#{dial_code}#{f}" : "0#{f}"
           end
         end
-        num
+        with_cc ? "+#{dial_code}#{num}" : "0#{num}"
       end
 
       def to_s
