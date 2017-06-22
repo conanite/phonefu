@@ -48,4 +48,22 @@ describe Phonefu do
     # expect_number "   ",                       nil
     # expect_number nil,                         nil
   end
+
+  describe "format" do
+    it "formats with country code" do
+      tn = Phonefu.parse "06 60 62 31 84", "33"
+      expect(tn.format true).to eq "+33 6 60 62 31 84"
+    end
+
+    it "formats without country code" do
+      tn = Phonefu.parse "06 60 62 31 84", "33"
+      expect(tn.format false).to eq "06 60 62 31 84"
+    end
+
+    it "formats without country code when requested" do
+      tn = Phonefu.parse "06 60 62 31 84", "33"
+      expect(tn.format "FR").to eq "06 60 62 31 84"
+      expect(tn.format "DE").to eq "+33 6 60 62 31 84"
+    end
+  end
 end

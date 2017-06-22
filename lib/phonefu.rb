@@ -36,7 +36,7 @@ module Phonefu
       country && country.mobile?(number)
     end
 
-    def format with_cc
+    def format with_cc=false
       country.format number, with_cc
     end
 
@@ -73,14 +73,26 @@ module Phonefu
         @mobile_regex && num.match(@mobile_regex)
       end
 
+      def prepend_cc num, with_cc
+        if with_cc
+          if with_cc == true
+            "+#{dial_code} #{num}"
+          else
+            prepend_cc num, with_cc.to_s.downcase != iso2.downcase
+          end
+        else
+          "0#{num}"
+        end
+      end
+
       def format num, with_cc
         formatters.each do |regex, pattern|
           if matchdata = num.match(regex)
             f = num.gsub(regex, pattern)
-            return with_cc ? "+#{dial_code}#{f}" : "0#{f}"
+            return prepend_cc f, with_cc
           end
         end
-        with_cc ? "+#{dial_code}#{num}" : "0#{num}"
+        return prepend_cc num, with_cc
       end
 
       def to_s
@@ -105,7 +117,7 @@ module Phonefu
     register Country.new("IE" , "353", /^8/, {
                            /^1(\d{3})(\d+)$/ => '1 \1 \2',
                            /^(\d{2})(\d{3})(\d+)$/ => '\1 \2 \3',
-                           })
+                         })
     register Country.new("IS" , "354", nil)
     register Country.new("AL" , "355", nil)
     register Country.new("MT" , "356", nil)
