@@ -16,6 +16,19 @@ describe Phonefu do
     end
   end
 
+  describe "#mobile?" do
+    it "detects french mobile numbers" do
+      tn = Phonefu.parse "06 60 62 31 84", "33"
+      expect(tn.mobile?).to be_truthy
+
+      tn = Phonefu.parse "07 60 62 31 84", "33"
+      expect(tn.mobile?).to be_truthy
+
+      tn = Phonefu.parse "0146477453", "33"
+      expect(tn.mobile?).to be_falsy
+    end
+  end
+
   describe 'normalise' do
     expect_number "(33) 4 66 92 01 99" , "49" , "FR", "04 66 92 01 99"  , false
     expect_number "(33) 6 76 99 07 59" , nil  , "FR", "06 76 99 07 59"  , true
@@ -64,6 +77,19 @@ describe Phonefu do
       tn = Phonefu.parse "06 60 62 31 84", "33"
       expect(tn.format "FR").to eq "06 60 62 31 84"
       expect(tn.format "DE").to eq "+33 6 60 62 31 84"
+    end
+
+    it "formats without country code when requested" do
+      tn = Phonefu.parse "+353 87 88 99 007", nil
+      expect(tn.format  true).to eq "+353 87 889 9007"
+      expect(tn.format  "FR").to eq "+353 87 889 9007"
+      expect(tn.format  "DE").to eq "+353 87 889 9007"
+      expect(tn.format  "IE").to eq "087 889 9007"
+      expect(tn.format  "iE").to eq "087 889 9007"
+      expect(tn.format  "ie").to eq "087 889 9007"
+      expect(tn.format  :ie).to eq "087 889 9007"
+      expect(tn.format  :IE).to eq "087 889 9007"
+      expect(tn.format false).to eq "087 889 9007"
     end
 
     it "just returns the number if the country is unknown" do

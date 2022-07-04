@@ -4,6 +4,7 @@ module Phonefu
   INITIAL_ZERO = /^0/.freeze
   INITIAL_PLUS = /^\+/.freeze
   def self.parse number, default_country_code=nil
+    digits = number || ""
     digits = number.gsub(/[^\d]/, '') # brutally discard any non-digit
     digits = digits.gsub(/^00/, '')   # replace initial 00 with nothing
     if digits.match INITIAL_ZERO
@@ -109,7 +110,7 @@ module Phonefu
                          { /^(4(6|7|8|9)\d)(\d\d)(\d\d)(\d\d)$/ => '\1 \3 \4 \5',
                            /^(1|2|3|4)(\d\d\d)(\d\d)(\d\d)$/ => '\1 \2 \3 \4',
                            /^(\d\d)(\d\d)(\d\d)(\d\d)$/ => '\1 \2 \3 \4' })
-    register Country.new("FR" , "33" , /^6\d{8}$/, { /^(\d)(\d\d)(\d\d)(\d\d)(\d\d)$/ => '\1 \2 \3 \4 \5' })
+    register Country.new("FR" , "33" , /^[67]\d{8}$/, { /^(\d)(\d\d)(\d\d)(\d\d)(\d\d)$/ => '\1 \2 \3 \4 \5' })
     register Country.new("ES" , "34" , nil)
     register Country.new("GI" , "350", nil)
     register Country.new("PT" , "351", nil)
