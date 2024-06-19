@@ -105,7 +105,7 @@ module Phonefu
 
     NO_COUNTRY = Country.new "", "", nil
     register Country.new("GR" , "30" , nil)
-    register Country.new("NL" , "31" , nil)
+    register Country.new("NL" , "31" , /^6\d{8}$/, { /^(\d)(\d\d)(\d\d)(\d\d)(\d\d)$/ => '\1 \2 \3 \4 \5' })
     register Country.new("BE" , "32" , /^4(6|7|8|9)\d{7}$/,
                          { /^(4(6|7|8|9)\d)(\d\d)(\d\d)(\d\d)$/ => '\1 \3 \4 \5',
                            /^(1|2|3|4)(\d\d\d)(\d\d)(\d\d)$/ => '\1 \2 \3 \4',

@@ -50,6 +50,7 @@ describe Phonefu do
     expect_number "(49) 33 203 679 952", "353", "DE", "033203 67 9952"  , false
     expect_number "( 32) 85 23 57 99"  , "49" , "BE", "085 23 57 99"    , false
     expect_number "(0041) 79 209 26 99", "49" , "CH", "0792092699"      , false
+    expect_number "+31 6 45 39 92 52"  , "31" , "NL", "06 45 39 92 52"  , true
     # expect_number " 06 92 87 94 99    ", "+33692879499"
     # expect_number "(0590) 841444",       "+33590841444"
     # expect_number "00617-420999185",     "+617420999185"
