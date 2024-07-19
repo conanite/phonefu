@@ -59,11 +59,12 @@ module Phonefu
     end
 
     class Country
-      attr_accessor :iso2, :dial_code, :mobile_regex, :belongs, :formatters
-      def initialize iso2, dial_code, mobile_regex, formatters=nil
+      attr_accessor :iso2, :dial_code, :mobile_regex, :belongs, :formatters, :leading_local_zero
+      def initialize iso2, dial_code, mobile_regex, formatters=nil, leading_local_zero=true
         @iso2, @dial_code, @mobile_regex = iso2, dial_code, mobile_regex.freeze
         @formatters = formatters || { }
         @belongs = /^#{dial_code}/.freeze
+        @leading_local_zero = leading_local_zero
       end
 
       def belongs? num
@@ -81,8 +82,10 @@ module Phonefu
           else
             prepend_cc num, with_cc.to_s.downcase != iso2.downcase
           end
-        else
+        elsif leading_local_zero
           "0#{num}"
+        else
+          "#{num}"
         end
       end
 
@@ -145,9 +148,9 @@ module Phonefu
     register Country.new("BA" , "387", nil)
     register Country.new("EU" , "388", nil)
     register Country.new("MK" , "389", nil)
-    register Country.new("IT" , "39" , nil)
+    register Country.new("IT" , "39" , /^3/, { /^(\d{3})(\d+)$/ => '\1 \2' }, false)
     register Country.new("RO" , "40" , nil)
-    register Country.new("CH" , "41" , nil)
+    register Country.new("CH" , "41" , /^7[456789]\d{7}/)
     register Country.new("AT" , "43" , nil)
     register Country.new("UK" , "44" , /^7[1-9]\d{8}$/, {
                            /^(2\d)(\d{4})(\d{4})$/ => '\1 \2 \3',
