@@ -33,6 +33,8 @@ describe Phonefu do
     expect_number "(33) 4 66 92 01 99" , "49" , "FR", "04 66 92 01 99"  , false
     expect_number "(33) 6 76 99 07 59" , nil  , "FR", "06 76 99 07 59"  , true
     expect_number "+33466920199",        nil  , "FR", "04 66 92 01 99"  , false
+    expect_number "+212 660 623 184"   , "212", "MA", "0660623184"      , true
+    expect_number "+212 1450 4578"     , "212", "MA", "014504578"       , false
     expect_number "(262) 99.42.00",      nil  , nil , "(262) 99.42.00"  , false
     expect_number "(1) 508 349 6820",    nil  , nil , "(1) 508 349 6820", false
     expect_number "+33 6 77 88 99 00",   nil  , "FR", "06 77 88 99 00"  , true

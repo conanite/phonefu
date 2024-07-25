@@ -136,6 +136,7 @@ module Phonefu
     register Country.new("AM" , "374", nil)
     register Country.new("BY" , "375", nil)
     register Country.new("AD" , "376", nil)
+    register Country.new("MA" , "212", /^[67]/)
     register Country.new("MC" , "377", nil)
     register Country.new("SM" , "378", nil)
     register Country.new("VA" , "379", nil)
